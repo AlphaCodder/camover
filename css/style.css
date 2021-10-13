@@ -626,6 +626,8 @@ a:focus {
           filter: brightness(1);
 }
 
+/* ---------------------------------- */
+
 .client_section .client_container {
   margin: 15px auto 0 auto;
 }
@@ -636,8 +638,8 @@ a:focus {
 
 .client_section .client_container .box .detail-box {
   padding: 35px;
-  -webkit-box-shadow: 0px 0px 16px 0px rgba(0, 0, 0, 0.29);
-  box-shadow: 0px 0px 16px 0px rgba(0, 0, 0, 0.29);
+  /* -webkit-box-shadow: 0px 0px 16px 0px rgba(0, 0, 0, 0.29);
+  box-shadow: 0px 0px 16px 0px rgba(0, 0, 0, 0.29); */
 }
 
 .client_section .client_container .box .detail-box p {
@@ -782,11 +784,12 @@ a:focus {
 
 
 html,body{
-background-size: cover;
-background-color:  #3a4468;
-background-repeat: no-repeat;
-height: 95%;
-font-family: 'Numans', sans-serif;
+  height: 100%;
+}
+
+.sub_page{
+  height: 90%;
+  background-color: #3a4468;
 }
 
 .container{
@@ -849,13 +852,12 @@ margin-right: 5px;
 }
 
 .login_btn{
-color: black;
 background-color: #FFC312;
 width: 100px;
 }
 
 .login_btn:hover{
-color: black;
+color: #FFC312;
 background-color: white;
 }
 
@@ -866,4 +868,3 @@ color: white;
 .links a{
 margin-left: 4px;
 }
-/*# sourceMappingURL=style.css.map */
