@@ -37,9 +37,9 @@
 
   <div class="container">
     <div class="d-flex justify-content-center h-100">
-      <div id="log_in" class="card">
+      <div id="sign-up" class="card">
         <div class="card-header">
-          <h3>Sign In</h3>
+          <h3>Sign Up</h3>
           <div class="d-flex justify-content-end social_icon">
             <span><i class="fa fa-google"></i></span>
           </div>
@@ -50,8 +50,13 @@
               <div class="input-group-prepend">
                 <span class="input-group-text"><i class="fa fa-user"></i></span>
               </div>
-              <input type="text" class="form-control" placeholder="username" id="email_field">
-              
+              <input type="text" class="form-control" placeholder="fullName" id="user_name">
+            </div>
+            <div class="input-group form-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text"><i class="fa fa-envelope"></i></span>
+              </div>
+              <input type="email" class="form-control" placeholder="username" id="email_field">              
             </div>
             <div class="input-group form-group">
               <div class="input-group-prepend">
@@ -59,17 +64,17 @@
               </div>
               <input type="password" class="form-control" placeholder="password" id="pass_field">
             </div>
-            <div class="row align-items-center remember">
+            <!-- <div class="row align-items-center remember">
               <input type="checkbox">Remember Me
-            </div>
+            </div> -->
             <div class="form-group">
-              <input onclick="login()" type="submit" value="Login" class="btn float-right login_btn">
+              <input onclick="register()" type="submit" value="Register" class="btn float-right login_btn">
             </div>
           </form>
         </div>
         <div class="card-footer">
           <div class="d-flex justify-content-center links">
-            Don't have an account?<a href="#">Sign Up</a>
+            Already have an account?<a href="#">Sign In</a>
           </div>
           <div class="d-flex justify-content-center">
             <a href="#">Forgot your password?</a>
@@ -104,6 +109,6 @@
   <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
-  <script type="module" src="js/index.js"></script>
+  <script src="js/index.js"></script>
 
 </html>
