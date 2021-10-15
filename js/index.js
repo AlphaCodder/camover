@@ -15,10 +15,31 @@ const firebaseApp = initializeApp({
 
   onAuthStateChanged(auth, user => {
     if (user) {
-      document.getElementById("user_div").style.display = "block";
-      document.getElementById("login_div").style.display = "none";
     } else {
-      document.getElementById("user_div").style.display = "none";
-      document.getElementById("login_div").style.display = "block";
     }
   });
+
+  // to get current year
+function getYear() {
+  var currentDate = new Date();
+  var currentYear = currentDate.getFullYear();
+  document.querySelector("#displayYear").innerHTML = currentYear;
+}
+
+getYear();
+
+function login(){
+  var userEmail = document.getElementById("email_field").value;
+  var userPass = document.getElementById("pass_field").value;
+
+  firebase.auth().signInWithEmailAndPassword(userEmail, userPass).catch(function(error) {
+      // Handle Errors here.
+      var errorCode = error.code;
+      var errorMessage = error.message;
+  
+      window.alert("Error : " + errorMessage);
+  
+      // ...
+    });
+}
+
