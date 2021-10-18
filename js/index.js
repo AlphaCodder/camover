@@ -12,13 +12,13 @@ var firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 //Initialize variables
 const auth = firebase.auth()
-const database = firebase.database()
-
+var database = firebase.database()
+var db = firebase.firestore();
 //register function
 function register(){
   var email = document.getElementById("email_field").value;
   var password = document.getElementById("pass_field").value;
-  var fullname = document.getElementById("user_name").value;
+  var full_name = document.getElementById("user_name").value;
 
   //validate input
   if(ValidateEmail(email)==false && ValidatePass(password)==false){
@@ -31,14 +31,9 @@ function register(){
   .then(function () {
     var user = auth.currentUser
 
-    var database_ref = database.ref()
+    writeUserData(user.uid, full_name, email)
 
-    var user_data = {
-      email :email,
-      fullname : fullname,
-      last_login : Date.now()
-    }
-    database_ref.child('users/' + user.uid).set(user_data)
+    alert('User created!')
   })
   .catch(function(error) {
     var error_code = error.code
@@ -49,6 +44,32 @@ function register(){
 
   alert('Sign Up Successful!')
 }
+
+function writeUserData(userId, name, email) {
+ 
+  var usersCollection = db.collection("users");
+
+  var userDocument = usersCollection.doc(userId);
+
+  userDocument.set({ 
+    name : name,
+    email : email
+  })
+  .then(()=>{
+      console.log("User written successfully");
+  })
+  .catch(error=>{
+    console.log(error.message);
+  });
+
+
+  firebase.database().ref('users/' + userId).set({
+    username: name,
+    email: email,
+    last_login : Date.now()
+  });
+}
+
 
 function ValidateEmail(email) 
 {

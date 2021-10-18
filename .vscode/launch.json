@@ -8,7 +8,7 @@
             "type": "pwa-chrome",
             "request": "launch",
             "name": "Launch Chrome against localhost",
-            "url": "file:///C:/Users/kumar/Desktop/minics-html/index.html",
+            "url": "file:///C:/Users/kumar/Desktop/camover-html/index.html",
             "webRoot": "${workspaceFolder}"
         }
     ]
