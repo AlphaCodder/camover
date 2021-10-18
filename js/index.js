@@ -40,9 +40,9 @@ function register(){
     var error_message = error.message
 
     alert(error_message)
-  })
+  });
 
-  alert('Sign Up Successful!')
+  // alert('Sign Up Successful!')
 }
 
 function writeUserData(userId, name, email) {
