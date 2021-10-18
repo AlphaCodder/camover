@@ -39,7 +39,7 @@
     <div class="d-flex justify-content-center h-100">
       <div id="sign-up" class="card">
         <div class="card-header">
-          <h3>Sign Up</h3>
+          <h3>Login</h3>
           <div class="d-flex justify-content-end social_icon">
             <span><i class="fa fa-google"></i></span>
           </div>
@@ -48,33 +48,27 @@
           <form>
             <div class="input-group form-group">
               <div class="input-group-prepend">
-                <span class="input-group-text"><i class="fa fa-user"></i></span>
-              </div>
-              <input type="text" class="form-control" placeholder="User Name" id="user_name">
-            </div>
-            <div class="input-group form-group">
-              <div class="input-group-prepend">
                 <span class="input-group-text"><i class="fa fa-envelope"></i></span>
               </div>
-              <input type="email" class="form-control" placeholder="E-mail" id="email_field">              
+              <input type="email" autocomplete="email" class="form-control" placeholder="E-mail" id="email_field">              
             </div>
             <div class="input-group form-group">
               <div class="input-group-prepend">
                 <span class="input-group-text"><i class="fa fa-key"></i></span>
               </div>
-              <input type="password" class="form-control" placeholder="Password" id="pass_field">
+              <input type="password" autocomplete="current-password" class="form-control" placeholder="Password" id="pass_field">
             </div>
             <div class="row align-items-center remember">
               <input type="checkbox">Remember Me
             </div>
             <div class="form-group">
-              <input onclick="register()" type="button" value="Register" class="btn float-right login_btn btn-primary">
+              <input onclick="login()" type="button" value="login" class="btn float-right login_btn btn-primary">
             </div>
           </form>
         </div>
         <div class="card-footer">
           <div class="d-flex justify-content-center links">
-            Already have an account?<a href="#">Sign In</a>
+            Don't have an account?<a href="user.html">Sign Up</a>
           </div>
           <div class="d-flex justify-content-center">
             <a href="#">Forgot your password?</a>
@@ -89,7 +83,7 @@
     <div class="container">
       <p>
         &copy; <span id="displayYear"></span> All Rights Reserved By
-        <a href="https://html.design/">Titan.</a>
+        <a href="index.html">Titan.</a>
       </p>
     </div>
   </footer>

@@ -14,6 +14,34 @@ firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth()
 var database = firebase.database()
 var db = firebase.firestore();
+
+//login function
+function login() {
+  var email = document.getElementById("email_field").value;
+  var password = document.getElementById("pass_field").value;
+
+  if(ValidateEmail(email) == false || ValidatePass(password) == false){
+    alert('Check your email and password!');
+    return
+  }
+
+  auth.signInWithEmailAndPassword(email, password)
+  .then(function(){
+    var user = auth.currentUser;
+    var db_ref = database.ref();
+
+    var user_data = {
+      last_login : Date.now()
+    }
+
+    db_ref.child('users/'+user.id).update(user_data)
+
+    const userName = document.getElementById("user_name");
+    userName.innerHTML = email;
+
+  })
+}
+
 //register function
 function register(){
   var email = document.getElementById("email_field").value;
@@ -34,6 +62,9 @@ function register(){
     writeUserData(user.uid, full_name, email)
 
     alert('User created!')
+      
+    const userName = document.getElementById("user_name");
+    userName.innerHTML = email;
   })
   .catch(function(error) {
     var error_code = error.code
@@ -44,6 +75,9 @@ function register(){
 
   // alert('Sign Up Successful!')
 }
+
+
+
 
 function writeUserData(userId, name, email) {
  
@@ -96,6 +130,7 @@ function getYear() {
   var currentYear = currentDate.getFullYear();
   document.querySelector("#displayYear").innerHTML = currentYear;
 }
+
 
 getYear();
 
