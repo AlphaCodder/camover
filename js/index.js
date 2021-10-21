@@ -10,10 +10,12 @@ var firebaseConfig = {
 };
 //Initialize firebase
 firebase.initializeApp(firebaseConfig);
+
 //Initialize variables
 const auth = firebase.auth()
 var database = firebase.database()
 var db = firebase.firestore();
+var currUsername
 
 //login function
 function login() {
@@ -29,15 +31,37 @@ function login() {
   .then(function(){
     var user = auth.currentUser;
     var db_ref = database.ref();
-
+        
     var user_data = {
       last_login : Date.now()
     }
+    
+    db_ref.child('users/'+ user.uid).update(user_data);
+    
+    var docRef = db.collection("users").doc(user.uid);
 
-    db_ref.child('users/'+user.id).update(user_data)
+    docRef.get().then((doc) => {
+        if (doc.exists) {
+          data = doc.data();
+          currUsername = data.email;
+          alert('login successful!');
+          const userName = document.getElementById("user_name");
+          userName.innerHTML = currUsername;
+        } else {
+            // doc.data() will be undefined in this case
+            console.log("No such document!");
+        }
+    }).catch((error) => {
+        console.log("Error getting document:", error);
+    });
 
-    const userName = document.getElementById("user_name");
-    userName.innerHTML = email;
+
+  })
+  .catch(function(error){
+    var error_code = error.code
+    var error_message = error.message
+
+    alert(error_message)
 
   })
 }
@@ -61,10 +85,8 @@ function register(){
 
     writeUserData(user.uid, full_name, email)
 
-    alert('User created!')
+    alert('Welcome ' + full_name + '!')
       
-    const userName = document.getElementById("user_name");
-    userName.innerHTML = email;
   })
   .catch(function(error) {
     var error_code = error.code
@@ -72,11 +94,7 @@ function register(){
 
     alert(error_message)
   });
-
-  // alert('Sign Up Successful!')
 }
-
-
 
 
 function writeUserData(userId, name, email) {
@@ -98,7 +116,7 @@ function writeUserData(userId, name, email) {
 
 
   firebase.database().ref('users/' + userId).set({
-    username: name,
+    name: name,
     email: email,
     last_login : Date.now()
   });
@@ -131,21 +149,6 @@ function getYear() {
   document.querySelector("#displayYear").innerHTML = currentYear;
 }
 
-
 getYear();
 
-// function login(){
-//   var userEmail = document.getElementById("email_field").value;
-//   var userPass = document.getElementById("pass_field").value;
-
-//   firebase.auth().signInWithEmailAndPassword(userEmail, userPass).catch(function(error) {
-//       // Handle Errors here.
-//       var errorCode = error.code;
-//       var errorMessage = error.message;
-  
-//       window.alert("Error : " + errorMessage);
-  
-//       // ...
-//     });
-// }
-
+// CurrentUser data
