@@ -45,8 +45,7 @@ function login() {
           data = doc.data();
           currUsername = data.email;
           alert('login successful!');
-          const userName = document.getElementById("user_name");
-          userName.innerHTML = currUsername;
+          window.location.replace('/index.html');
         } else {
             // doc.data() will be undefined in this case
             console.log("No such document!");
@@ -85,7 +84,8 @@ function register(){
 
     writeUserData(user.uid, full_name, email)
 
-    alert('Welcome ' + full_name + '!')
+    alert('Welcome ' + full_name + '!');
+    window.location.replace('/index.html');
       
   })
   .catch(function(error) {
