@@ -15,7 +15,6 @@ firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth()
 var database = firebase.database()
 var db = firebase.firestore();
-var currUsername
 
 //login function
 function login() {
@@ -31,21 +30,20 @@ function login() {
   .then(function(){
     var user = auth.currentUser;
     var db_ref = database.ref();
-        
+    
+    // updating last login details    
     var user_data = {
       last_login : Date.now()
     }
-    
     db_ref.child('users/'+ user.uid).update(user_data);
-    
-    var docRef = db.collection("users").doc(user.uid);
 
+    // fetching user details
+    var docRef = db.collection("users").doc(user.uid);
     docRef.get().then((doc) => {
         if (doc.exists) {
           data = doc.data();
-          currUsername = data.email;
-          alert('login successful!');
-          window.location.replace('/index.html');
+          currUsername = data.name;
+          alert('login successful! ' + currUsername);
         } else {
             // doc.data() will be undefined in this case
             console.log("No such document!");
@@ -59,7 +57,6 @@ function login() {
   .catch(function(error){
     var error_code = error.code
     var error_message = error.message
-
     alert(error_message)
 
   })
@@ -77,26 +74,22 @@ function register(){
     return
   }
 
-  //auth user
   auth.createUserWithEmailAndPassword(email,password)
   .then(function () {
     var user = auth.currentUser
-
     writeUserData(user.uid, full_name, email)
-
     alert('Welcome ' + full_name + '!');
-    window.location.replace('/index.html');
       
   })
   .catch(function(error) {
     var error_code = error.code
     var error_message = error.message
-
     alert(error_message)
   });
 }
 
 
+// writes user data to the databses
 function writeUserData(userId, name, email) {
  
   var usersCollection = db.collection("users");
@@ -105,9 +98,15 @@ function writeUserData(userId, name, email) {
 
   userDocument.set({ 
     name : name,
-    email : email
+    email : email,
+    last_login : Date.now()
   })
   .then(()=>{
+      firebase.database().ref('users/' + userId).set({
+        name: name,
+        email: email,
+        last_login : Date.now()
+      });
       console.log("User written successfully");
   })
   .catch(error=>{
@@ -115,14 +114,9 @@ function writeUserData(userId, name, email) {
   });
 
 
-  firebase.database().ref('users/' + userId).set({
-    name: name,
-    email: email,
-    last_login : Date.now()
-  });
 }
 
-
+// checks for a valid email address
 function ValidateEmail(email) 
 {
  if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email))
@@ -132,7 +126,7 @@ function ValidateEmail(email)
     alert("You have entered an invalid email address!")
     return (false)
 }
-
+// checks for a valid password
 function ValidatePass(password) {
   if(password<6){
     return false;
@@ -150,5 +144,3 @@ function getYear() {
 }
 
 getYear();
-
-// CurrentUser data
