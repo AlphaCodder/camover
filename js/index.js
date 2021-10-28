@@ -15,7 +15,21 @@ firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth()
 var database = firebase.database()
 var db = firebase.firestore();
+var user = firebase.auth().currentUser;
 
+//check for active user
+firebase.auth().onAuthStateChanged((user) => {
+  if (user) {
+    // User is signed in, see docs for a list of available properties
+    // https://firebase.google.com/docs/reference/js/firebase.User
+    var uid = user.uid;
+    getUser(uid);
+    // ...
+  } else {
+    // User is signed out
+    // ...
+  }
+});
 //login function
 function login() {
   var email = document.getElementById("email_field").value;
@@ -36,22 +50,6 @@ function login() {
       last_login : Date.now()
     }
     db_ref.child('users/'+ user.uid).update(user_data);
-
-    // fetching user details
-    var docRef = db.collection("users").doc(user.uid);
-    docRef.get().then((doc) => {
-        if (doc.exists) {
-          data = doc.data();
-          currUsername = data.name;
-          alert('login successful! ' + currUsername);
-        } else {
-            // doc.data() will be undefined in this case
-            console.log("No such document!");
-        }
-    }).catch((error) => {
-        console.log("Error getting document:", error);
-    });
-
 
   })
   .catch(function(error){
@@ -88,30 +86,14 @@ function register(){
   });
 }
 
-const user = firebase.auth().currentUser;
-
-firebase.auth().onAuthStateChanged((user) => {
-
-  if (user) {
-
-    // User is signed in, see docs for a list of available properties
-
-    // https://firebase.google.com/docs/reference/js/firebase.User
-
-    var uid = user.uid;
-    alert(uid);
-
-    // ...
-
-  } else {
-
-    // User is signed out
-
-    // ...
-
-  }
-
-});
+function signOut() {
+  firebase.auth().signOut().then(() => {
+    // Sign-out successful.
+    alert("Signed out user!")
+  }).catch((error) => {
+    // An error happened.
+  });
+}
 
 
 // writes user data to the databses
@@ -167,5 +149,21 @@ function getYear() {
   var currentYear = currentDate.getFullYear();
   document.querySelector("#displayYear").innerHTML = currentYear;
 }
-
 getYear();
+
+function getUser(uid){
+  // fetching user details
+  var docRef = db.collection("users").doc(uid);
+  docRef.get().then((doc) => {
+      if (doc.exists) {
+        data = doc.data();
+        currUsername = data.name;
+        document.getElementById("acc_name").innerHTML = currUsername;
+      } else {
+          // doc.data() will be undefined in this case
+          console.log("No such document!");
+      }
+  }).catch((error) => {
+      console.log("Error getting document:", error);
+  });
+}

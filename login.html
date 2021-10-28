@@ -61,7 +61,10 @@
             <div class="row align-items-center remember">
               <input type="checkbox">Remember Me
             </div>
-            <div class="form-group">
+            <div id="logOut" class="form-group">
+              <input onclick="signOut()" type="button" value="Sign-out" class="btn float-right login_btn btn-primary">
+            </div>
+            <div id="logIn" class="form-group">              
               <input onclick="login()" type="button" value="login" class="btn float-right login_btn btn-primary">
             </div>
           </form>
