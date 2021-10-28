@@ -99,7 +99,7 @@ firebase.auth().onAuthStateChanged((user) => {
     // https://firebase.google.com/docs/reference/js/firebase.User
 
     var uid = user.uid;
-    alert(user.uid.name);
+    alert(uid);
 
     // ...
 
