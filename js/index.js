@@ -88,6 +88,8 @@ function register(){
   });
 }
 
+const user = firebase.auth().currentUser;
+
 firebase.auth().onAuthStateChanged((user) => {
 
   if (user) {
