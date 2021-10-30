@@ -61,19 +61,11 @@
               </button>
             </from>
             <div class="user_option_box">
-              <div class="dropdown">
-                  <a href="login.html" class="account-link">
-                  <i class="fa fa-user" aria-hidden="true"></i>
-                  <span" id="acc_name">
-                    My Account
-                  </span>
-                  </a>
-                  <div class="btn dropdown-content">
-                    <a href="#">Profile</a>
-                    <a href="#">Track Order</a>
-                    <a  onclick="signOut()" href="index.html">Log Out</a>
-                  </div>
-              </div>
+              <a href="login.html" class="account-link">
+              <i class="fa fa-user" aria-hidden="true"></i>
+              <span id="acc_name">
+                My Account
+              </span>
               <a href="" class="cart-link">
                 <i class="fa fa-shopping-cart" aria-hidden="true"></i>
                 <span>
@@ -253,6 +245,11 @@
               <li>
                 <a href="product.html">
                   Wish List
+                </a>
+              </li>
+              <li>
+                <a id="logOutBtn" onclick="signOut()" href="index.html">
+                  Log Out
                 </a>
               </li>
             </ul>
