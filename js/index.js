@@ -50,6 +50,7 @@ function login() {
       last_login : Date.now()
     }
     db_ref.child('users/'+ user.uid).update(user_data);
+    window.location.href = "index.html";
 
   })
   .catch(function(error){
