@@ -16,6 +16,7 @@ const auth = firebase.auth()
 var database = firebase.database()
 var db = firebase.firestore();
 var user = firebase.auth().currentUser;
+var loggedIn = false;
 
 //check for active user
 firebase.auth().onAuthStateChanged((user) => {
@@ -24,8 +25,11 @@ firebase.auth().onAuthStateChanged((user) => {
     // https://firebase.google.com/docs/reference/js/firebase.User
     var uid = user.uid;
     getUser(uid);
+    loggedIn = true;
     // ...
   } else {
+    loggedIn = false;
+    document.getElementById("logOutBtn").style.display = "none";
     // User is signed out
     // ...
   }
@@ -50,6 +54,7 @@ function login() {
       last_login : Date.now()
     }
     db_ref.child('users/'+ user.uid).update(user_data);
+    loggedIn = true;
     window.location.href = "index.html";
 
   })
@@ -57,7 +62,6 @@ function login() {
     var error_code = error.code
     var error_message = error.message
     alert(error_message)
-
   })
 }
 
@@ -120,9 +124,16 @@ function writeUserData(userId, name, email) {
   .catch(error=>{
     console.log(error.message);
   });
-
-
 }
+
+function LogOut(loggedIn) {
+  if(loggedIn == false){
+    document.getElementById(logOutBtn).style.visibility = "hidden";
+  }
+  else{
+  }
+}
+
 
 // checks for a valid email address
 function ValidateEmail(email) 
