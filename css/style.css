@@ -867,3 +867,15 @@ color: white;
 .links a{
 margin-left: 4px;
 }
+
+.loader{
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow-x: hidden;
+  overflow-y:hidden;
+}

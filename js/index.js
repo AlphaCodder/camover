@@ -17,13 +17,14 @@ var database = firebase.database()
 var db = firebase.firestore();
 var user = firebase.auth().currentUser;
 var loggedIn = false;
-
+var usrid;
 //check for active user
 firebase.auth().onAuthStateChanged((user) => {
   if (user) {
     // User is signed in, see docs for a list of available properties
     // https://firebase.google.com/docs/reference/js/firebase.User
     var uid = user.uid;
+    usrid = uid;
     getUser(uid);
     loggedIn = true;
     // ...
@@ -64,7 +65,6 @@ function login() {
     alert(error_message)
   })
 }
-
 //register function
 function register(){
   var email = document.getElementById("email_field").value;
@@ -90,7 +90,7 @@ function register(){
     alert(error_message)
   });
 }
-
+//signout function
 function signOut() {
   firebase.auth().signOut().then(() => {
     // Sign-out successful.
@@ -99,13 +99,10 @@ function signOut() {
     // An error happened.
   });
 }
-
-
 // writes user data to the databses
 function writeUserData(userId, name, email) {
  
   var usersCollection = db.collection("users");
-
   var userDocument = usersCollection.doc(userId);
 
   userDocument.set({ 
@@ -125,7 +122,7 @@ function writeUserData(userId, name, email) {
     console.log(error.message);
   });
 }
-
+//logout function
 function LogOut(loggedIn) {
   if(loggedIn == false){
     document.getElementById(logOutBtn).style.visibility = "hidden";
@@ -133,8 +130,6 @@ function LogOut(loggedIn) {
   else{
   }
 }
-
-
 // checks for a valid email address
 function ValidateEmail(email) 
 {
@@ -154,7 +149,6 @@ function ValidatePass(password) {
     return true;
   }
 }
-
 // to get current year
 function getYear() {
   var currentDate = new Date();
@@ -162,7 +156,7 @@ function getYear() {
   document.querySelector("#displayYear").innerHTML = currentYear;
 }
 getYear();
-
+//display user
 function getUser(uid){
   // fetching user details
   var docRef = db.collection("users").doc(uid);
@@ -171,11 +165,44 @@ function getUser(uid){
         data = doc.data();
         currUsername = data.name;
         document.getElementById("acc_name").innerHTML = currUsername;
+        document.getElementById("acc_name").href = "profile.html";
       } else {
           // doc.data() will be undefined in this case
           console.log("No such document!");
+        document.getElementById("acc_name").innerHTML = "MY ACCOUNT";
+
       }
   }).catch((error) => {
       console.log("Error getting document:", error);
   });
 }
+
+function profileUpdate(usrid) {
+  username = document.getElementById("fullName").value;
+  gender = document.getElementById("gender").value;
+  mobNo = document.getElementById("phno").value;
+  address  = document.getElementById("location").value;
+   
+  db.collection("users").doc(usrid).update({ 
+    name: username,
+    mobNo:mobNo,
+    address: address,
+    gender:gender,
+    last_login : Date.now()
+  },{merge : true})
+  .then(()=>{
+      firebase.database().ref('users/' + usrid).update({
+        name: username,
+        mobNo:mobNo,
+        address: address,
+        gender:gender,
+        last_login : Date.now()
+      });
+      console.log("User written successfully");
+  })
+  .catch(error=>{
+    console.log(error.message);
+  });
+
+}
+
