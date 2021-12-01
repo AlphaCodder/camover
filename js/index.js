@@ -1,40 +1,3 @@
-
-var firebaseConfig = {
-  apiKey: "AIzaSyAd20W2RGDHvsOgTHkw4M9vxPRdpxV-DVQ",
-  authDomain: "camover-17d96.firebaseapp.com",
-  projectId: "camover-17d96",
-  storageBucket: "camover-17d96.appspot.com",
-  messagingSenderId: "110735444043",
-  appId: "1:110735444043:web:8cb55c9ead4dea599d65ce",
-  measurementId: "G-F7ZD50MBG8"
-};
-//Initialize firebase
-firebase.initializeApp(firebaseConfig);
-
-//Initialize variables
-const auth = firebase.auth()
-var database = firebase.database()
-var db = firebase.firestore();
-var user = firebase.auth().currentUser;
-var loggedIn = false;
-var usrid;
-//check for active user
-firebase.auth().onAuthStateChanged((user) => {
-  if (user) {
-    // User is signed in, see docs for a list of available properties
-    // https://firebase.google.com/docs/reference/js/firebase.User
-    var uid = user.uid;
-    usrid = uid;
-    getUser(uid);
-    loggedIn = true;
-    // ...
-  } else {
-    loggedIn = false;
-    document.getElementById("logOutBtn").style.display = "none";
-    // User is signed out
-    // ...
-  }
-});
 //login function
 function login() {
   var email = document.getElementById("email_field").value;
@@ -156,6 +119,21 @@ function getYear() {
   document.querySelector("#displayYear").innerHTML = currentYear;
 }
 getYear();
+//check for active user
+auth.onAuthStateChanged((user) => {
+  if (user) {
+    // User is signed in, see docs for a list of available properties
+    // https://firebase.google.com/docs/reference/js/firebase.User
+    var uid = user.uid;
+    getUser(uid);
+    loggedIn = true;
+  } else {
+    loggedIn = false;
+    document.getElementById("logOutBtn").style.display = "none";
+    // User is signed out
+  }
+});
+
 //display user
 function getUser(uid){
   // fetching user details
@@ -170,20 +148,20 @@ function getUser(uid){
           // doc.data() will be undefined in this case
           console.log("No such document!");
         document.getElementById("acc_name").innerHTML = "MY ACCOUNT";
-
       }
+      user_id = uid;
   }).catch((error) => {
       console.log("Error getting document:", error);
   });
 }
-
-function profileUpdate(usrid) {
+function profileUpdate(user_id) {
+  console.log(user_id);
   username = document.getElementById("fullName").value;
   gender = document.getElementById("gender").value;
   mobNo = document.getElementById("phno").value;
   address  = document.getElementById("location").value;
    
-  db.collection("users").doc(usrid).update({ 
+  db.collection("users").doc(user_id).update({ 
     name: username,
     mobNo:mobNo,
     address: address,
@@ -191,7 +169,7 @@ function profileUpdate(usrid) {
     last_login : Date.now()
   },{merge : true})
   .then(()=>{
-      firebase.database().ref('users/' + usrid).update({
+      firebase.database().ref('users/' + user_id).update({
         name: username,
         mobNo:mobNo,
         address: address,
@@ -203,6 +181,5 @@ function profileUpdate(usrid) {
   .catch(error=>{
     console.log(error.message);
   });
-
 }
 
