@@ -57,6 +57,7 @@ function register(){
 function signOut() {
   firebase.auth().signOut().then(() => {
     // Sign-out successful.
+    document.getElementById("acc_name").innerHTML = "MY ACCOUNT";
     alert("Signed out user!")
   }).catch((error) => {
     // An error happened.
@@ -150,11 +151,12 @@ function getUser(uid){
         document.getElementById("acc_name").innerHTML = "MY ACCOUNT";
       }
       user_id = uid;
+      return user_id;
   }).catch((error) => {
       console.log("Error getting document:", error);
   });
 }
-function profileUpdate(user_id) {
+function profileUpdate() {
   console.log(user_id);
   username = document.getElementById("fullName").value;
   gender = document.getElementById("gender").value;
