@@ -134,7 +134,6 @@ auth.onAuthStateChanged((user) => {
     // User is signed out
   }
 });
-
 //display user
 function getUser(uid){
   // fetching user details
@@ -144,7 +143,11 @@ function getUser(uid){
         data = doc.data();
         currUsername = data.name;
         document.getElementById("acc_name").innerHTML = currUsername;
-        document.getElementById("acc_name").href = "profile.html";
+        document.getElementById("u_n").innerHTML = data.name;
+        document.getElementById("u_g").innerHTML = data.gender;
+        document.getElementById("u_m").innerHTML = data.mobNo;
+        document.getElementById("u_l").innerHTML = data.address;
+
       } else {
           // doc.data() will be undefined in this case
           console.log("No such document!");
@@ -156,6 +159,7 @@ function getUser(uid){
       console.log("Error getting document:", error);
   });
 }
+//update user info
 function profileUpdate() {
   console.log(user_id);
   username = document.getElementById("fullName").value;
@@ -184,4 +188,5 @@ function profileUpdate() {
     console.log(error.message);
   });
 }
+
 

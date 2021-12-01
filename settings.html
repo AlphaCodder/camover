@@ -173,17 +173,28 @@
                       <hr>
                       <form>
                         <div class="form-group">
-                          <label for="fullName">Full Name</label><span id="u_n"></span>
+                          <label for="fullName">Full Name</label>
+                          <input type="text" class="form-control" id="fullName" aria-describedby="fullNameHelp" placeholder="Enter your fullname" value="">
+                          <small id="fullNameHelp" class="form-text text-muted">Your name may appear around here where you are mentioned. You can change or remove it at any time.</small>
                         </div>
                         <div class="form-group">
-                          <label for="fullName">Gender</label><span id="u_g"></span>
+                          <label for="fullName">Gender</label>
+                          <input type="text" class="form-control" id="gender" aria-describedby="fullNameHelp" placeholder="Enter your gender" value="">
+                          <small id="fullNameHelp" class="form-text text-muted">Your name may appear around here where you are mentioned. You can change or remove it at any time.</small>
                         </div>
                         <div class="form-group">
-                          <label for="url">Mobile No.</label><span id="u_m"></span>
+                          <label for="url">Mobile No.</label>
+                          <input type="text" class="form-control" id="phno" placeholder="Enter your phone number">
                         </div>
                         <div class="form-group">
-                          <label for="location">Location</label><span id="u_l"></span>
+                          <label for="location">Location</label>
+                          <input type="text" class="form-control" id="location" placeholder="Enter your location">
                         </div>
+                        <div class="form-group small text-muted">
+                          All of the fields on this page are optional and can be deleted at any time, and by filling them out, you're giving us consent to share this data wherever your user profile appears.
+                        </div>
+                        <button onclick="profileUpdate()" type="button" class="btn btn-primary">Update Profile</button>
+                        <button type="reset" class="btn btn-light">Reset Changes</button>
                       </form>
                     </div>
                     <div class="tab-pane" id="account">
