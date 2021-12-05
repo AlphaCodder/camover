@@ -143,11 +143,8 @@ function getUser(uid){
         data = doc.data();
         currUsername = data.name;
         document.getElementById("acc_name").innerHTML = currUsername;
-        document.getElementById("u_n").innerHTML = data.name;
-        document.getElementById("u_g").innerHTML = data.gender;
-        document.getElementById("u_m").innerHTML = data.mobNo;
-        document.getElementById("u_l").innerHTML = data.address;
-
+        document.getElementById("acc_name").href = "profile.html";
+        
       } else {
           // doc.data() will be undefined in this case
           console.log("No such document!");
@@ -189,4 +186,9 @@ function profileUpdate() {
   });
 }
 
-
+function retUser(){
+  document.getElementById("fullName").placeholder = data.name;
+  document.getElementById("gender").placeholder = data.gender;
+  document.getElementById("phno").placeholder = data.mobNo;
+  document.getElementById("location").placeholder = data.address;
+}
