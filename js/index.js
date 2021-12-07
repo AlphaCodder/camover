@@ -144,7 +144,7 @@ function getUser(uid){
         currUsername = data.name;
         document.getElementById("acc_name").innerHTML = currUsername;
         document.getElementById("acc_name").href = "profile.html";
-        
+        retUser(data);
       } else {
           // doc.data() will be undefined in this case
           console.log("No such document!");
@@ -186,7 +186,7 @@ function profileUpdate() {
   });
 }
 
-function retUser(){
+function retUser(data){
   document.getElementById("fullName").placeholder = data.name;
   document.getElementById("gender").placeholder = data.gender;
   document.getElementById("phno").placeholder = data.mobNo;
